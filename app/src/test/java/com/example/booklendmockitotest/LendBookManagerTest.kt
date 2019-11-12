@@ -16,9 +16,10 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class LendBookManagerTest {
 
-    @Rule
-    @JvmField
-    var rule: TestRule = InstantTaskExecutorRule()
+//These below annotations are only used when class being tested have background thread and Livedata
+//    @Rule
+//    @JvmField
+//    var rule: TestRule = InstantTaskExecutorRule()
 
     @Mock
     lateinit var mockbookService:BookService
@@ -26,6 +27,7 @@ class LendBookManagerTest {
 
     @Before
     fun setUp(){
+        lendBookManager = LendBookManager(mockbookService)
         `when`(mockbookService. inStock(100)).thenReturn(true)
     }
 
@@ -33,7 +35,6 @@ class LendBookManagerTest {
     //Verifying if lend method is actually called
     @Test
     fun testCheckoutMethod() {
-        lendBookManager = LendBookManager(mockbookService)
         lendBookManager.checkout(100,1)
         verify(mockbookService).lend(100,1)
     }
@@ -46,4 +47,9 @@ class LendBookManagerTest {
         lendBookManager.checkout(100, 1)
     }
 
+    @Test
+    fun testUpdateUImethod(){
+        lendBookManager.updateUI("summer")
+        verify(mockbookService).checkbook("summer")
+    }
 }

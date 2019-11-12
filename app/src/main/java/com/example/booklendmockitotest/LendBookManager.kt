@@ -8,4 +8,8 @@ class LendBookManager(val bookService:BookService) {
             throw IllegalStateException("Book is not available")
         }
     }
+
+    fun updateUI(str: String) {
+        bookService.checkbook(str)
+    }
 }

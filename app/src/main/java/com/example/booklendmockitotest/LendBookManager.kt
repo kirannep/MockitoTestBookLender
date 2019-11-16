@@ -12,4 +12,8 @@ class LendBookManager(val bookService:BookService) {
     fun updateUI(str: String) {
         bookService.checkbook(str)
     }
+
+    fun booleanbook(str: String,bookId: Int){
+        bookService.bool(str,bookId)
+    }
 }
